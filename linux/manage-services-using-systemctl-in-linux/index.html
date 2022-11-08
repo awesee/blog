@@ -1,0 +1,1041 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>systemd 服务 - 我的知识学习记录</title>
+<meta name="description" content="systemd 是一个 Linux 系统基础组件的集合，提供了一个系统和服务管理器，运行为 PID 1 并负责启动其它程序。 功能包括：支持并行化任务；同时采用 socket 式与 D-Bus 总线式激活服务；按需启动守护进程（daemon）； 利用 Linux 的 cgroups 监视进程；支持快照和系统恢复；维护挂载点和自动挂载点；各服务间基于依赖关系进行精密控制。 systemd 支持 SysV 和 LSB 初始脚本，可以替代 sysvinit。 除此之外，功能还包括日志进程、控制基础系统配置，维护登陆用户列表以及系统账户、运行时目录和设置，可以运行容器和虚拟机， 可以简单的管理网络配置、网络时间同步、日志转发和名称解析等。">
+
+
+  <meta name="author" content="Shuo">
+  
+  <meta property="article:author" content="Shuo">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="我的知识学习记录">
+<meta property="og:title" content="systemd 服务">
+<meta property="og:url" content="/linux/manage-services-using-systemctl-in-linux/">
+
+
+  <meta property="og:description" content="systemd 是一个 Linux 系统基础组件的集合，提供了一个系统和服务管理器，运行为 PID 1 并负责启动其它程序。 功能包括：支持并行化任务；同时采用 socket 式与 D-Bus 总线式激活服务；按需启动守护进程（daemon）； 利用 Linux 的 cgroups 监视进程；支持快照和系统恢复；维护挂载点和自动挂载点；各服务间基于依赖关系进行精密控制。 systemd 支持 SysV 和 LSB 初始脚本，可以替代 sysvinit。 除此之外，功能还包括日志进程、控制基础系统配置，维护登陆用户列表以及系统账户、运行时目录和设置，可以运行容器和虚拟机， 可以简单的管理网络配置、网络时间同步、日志转发和名称解析等。">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2019-05-12T09:30:00+08:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/linux/manage-services-using-systemctl-in-linux/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Shuo",
+      "url": "/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="googled6f77d9aafcbfa9e" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="我的知识学习记录 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#aa00ff">
+<meta name="msapplication-TileColor" content="#00a300">
+<meta name="theme-color" content="#ffffff">
+<meta name="referrer" content="no-referrer"/>
+
+<style type="text/css">
+    a {
+        text-decoration: none;
+    }
+
+    .search-content .search-input {
+        border: 1px solid #afafaf;
+        padding: 0.25em 0.5em;
+    }
+
+    .page__footer {
+        position: relative;
+        background-color: transparent;
+        border-top: 1px solid #f3f3f3;
+        margin-top: 2em;
+    }
+
+    .page__footer-follow li {
+        text-transform: none;
+    }
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="我的知识学习记录"></a>
+        
+        <a class="site-title" href="/">
+          我的知识学习记录
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/post-archive">All</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/awesee">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">搜索</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/images/photo.jpg" alt="Shuo" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Shuo</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Learning by doing!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">China</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:openset.wang@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://awesee.github.io/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/awesee" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.weibo.com/2893417981" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+            <i class="fab fa-fw fa-weibo" aria-hidden="true"></i><span class="label">Weibo</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="systemd 服务">
+    <meta itemprop="description" content="systemd 是一个 Linux 系统基础组件的集合，提供了一个系统和服务管理器，运行为 PID 1 并负责启动其它程序。功能包括：支持并行化任务；同时采用 socket 式与 D-Bus 总线式激活服务；按需启动守护进程（daemon）；利用 Linux 的 cgroups 监视进程；支持快照和系统恢复；维护挂载点和自动挂载点；各服务间基于依赖关系进行精密控制。systemd 支持 SysV 和 LSB 初始脚本，可以替代 sysvinit。除此之外，功能还包括日志进程、控制基础系统配置，维护登陆用户列表以及系统账户、运行时目录和设置，可以运行容器和虚拟机，可以简单的管理网络配置、网络时间同步、日志转发和名称解析等。">
+    <meta itemprop="datePublished" content="2019年05月12日">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">systemd 服务
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+
+
+  26 分钟读完
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>systemd 是一个 Linux 系统基础组件的集合，提供了一个系统和服务管理器，运行为 PID 1 并负责启动其它程序。
+功能包括：支持并行化任务；同时采用 socket 式与 D-Bus 总线式激活服务；按需启动守护进程（daemon）；
+利用 Linux 的 cgroups 监视进程；支持快照和系统恢复；维护挂载点和自动挂载点；各服务间基于依赖关系进行精密控制。
+systemd 支持 SysV 和 LSB 初始脚本，可以替代 sysvinit。
+除此之外，功能还包括日志进程、控制基础系统配置，维护登陆用户列表以及系统账户、运行时目录和设置，可以运行容器和虚拟机，
+可以简单的管理网络配置、网络时间同步、日志转发和名称解析等。</p>
+
+<h3 id="systemd-简介">systemd 简介</h3>
+<p>首先 systemd 是一个用户空间的程序，属于应用程序，不属于 Linux 内核范畴。
+systemd 是 Linux 系统中最新的初始化系统（init），它主要的设计目标是克服 sysvinit 固有的缺点，提高系统的启动速度。</p>
+
+<p>Linux内核加载启动后，用户空间的第一个进程就是初始化进程，这个程序的物理文件约定位于/sbin/init，
+当然也可以通过传递内核参数来让内核启动指定的程序。这个进程的特点是进程号为1，代表第一个运行的用户空间进程。
+不同发行版采用了不同的启动程序，主要有以下几种主流选择：</p>
+
+<ol>
+  <li>以 Ubuntu 为代表的 Linux 发行版采用 upstart</li>
+  <li>CentOS7.0 版本之前的 System V init</li>
+  <li>CentOS7.0 版本的 systemd</li>
+</ol>
+
+<p>systemd 架构图:
+<img src="/assets/images/posts/20190512093000.png" alt="file" /></p>
+
+<h3 id="systemd-基本使用">systemd 基本使用</h3>
+
+<p>查看当前安装的版本</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemctl <span class="nt">--version</span>
+
+systemd 219
++PAM +AUDIT +SELINUX +IMA <span class="nt">-APPARMOR</span> +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 <span class="nt">-SECCOMP</span> +BLKID +ELFUTILS +KMOD +IDN
+</code></pre></div></div>
+
+<p>分析系统状态</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemctl status
+</code></pre></div></div>
+
+<p>输出激活的单元</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemctl 
+或
+<span class="nv">$ </span>systemctl list-units
+</code></pre></div></div>
+
+<p>输出运行失败的单元</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemctl <span class="nt">--failed</span>
+</code></pre></div></div>
+
+<p>所有可用的单元文件存放在 /usr/lib/systemd/system/ 和 /etc/systemd/system/ 目录（后者优先级更高）。查看所有已安装服务：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>systemctl list-unit-files
+</code></pre></div></div>
+
+<h3 id="系统管理">系统管理</h3>
+<p>systemd 并不是一个命令，而是一组命令，涉及到系统管理的方方面面。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 重启系统</span>
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl reboot
+
+<span class="c"># 关闭系统，切断电源</span>
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl poweroff
+
+<span class="c"># CPU停止工作</span>
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl halt
+
+<span class="c"># 暂停系统</span>
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl <span class="nb">suspend</span>
+
+<span class="c"># 让系统进入冬眠状态</span>
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl hibernate
+
+<span class="c"># 让系统进入交互式休眠状态</span>
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl hybrid-sleep
+
+<span class="c"># 启动进入救援状态（单用户状态）</span>
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl rescue
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">systemd-analyze</code> 命令用于查看启动耗时</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看启动耗时</span>
+<span class="nv">$ </span>systemd-analyze                                                                                       
+
+<span class="c"># 查看每个服务的启动耗时</span>
+<span class="nv">$ </span>systemd-analyze blame
+
+<span class="c"># 显示瀑布状的启动过程流</span>
+<span class="nv">$ </span>systemd-analyze critical-chain
+
+<span class="c"># 显示指定服务的启动流</span>
+<span class="nv">$ </span>systemd-analyze critical-chain atd.service
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">hostnamectl</code> 命令用于查看当前主机的信息</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 显示当前主机的信息</span>
+<span class="nv">$ </span>hostnamectl
+
+<span class="c"># 设置主机名。</span>
+<span class="nv">$ </span><span class="nb">sudo </span>hostnamectl set-hostname awesee
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">localectl</code> 命令用于查看本地化设置</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看本地化设置</span>
+<span class="nv">$ </span>localectl
+
+<span class="c"># 设置本地化参数。</span>
+<span class="nv">$ </span><span class="nb">sudo </span>localectl set-locale <span class="nv">LANG</span><span class="o">=</span>zh_CN.utf8
+<span class="nv">$ </span><span class="nb">sudo </span>localectl set-keymap zh_CN
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">timedatectl</code> 命令用于查看当前时区设置</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 查看当前时区设置</span>
+<span class="nv">$ </span>timedatectl
+
+<span class="c"># 显示所有可用的时区</span>
+<span class="nv">$ </span>timedatectl list-timezones                                                                                   
+
+<span class="c"># 设置当前时区</span>
+<span class="nv">$ </span><span class="nb">sudo </span>timedatectl set-timezone Asia/Shanghai
+<span class="nv">$ </span><span class="nb">sudo </span>timedatectl set-time YYYY-MM-DD
+<span class="nv">$ </span><span class="nb">sudo </span>timedatectl set-time HH:MM:SS
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">loginctl</code> 命令用于查看当前登录的用户</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 列出当前session</span>
+<span class="nv">$ </span>loginctl list-sessions
+
+<span class="c"># 列出当前登录用户</span>
+<span class="nv">$ </span>loginctl list-users
+
+<span class="c"># 列出显示指定用户的信息</span>
+<span class="nv">$ </span>loginctl show-user shuo
+</code></pre></div></div>
+
+<h3 id="systemd-unit">systemd unit</h3>
+<p>对于开发者来说，工作量最大的部分应该是编写配置单元文件，定义所需要的单元。</p>
+
+<p>systemd unit 类型</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Unit Type</th>
+      <th>File Extension</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Service unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.service</code></td>
+      <td>服务类</td>
+    </tr>
+    <tr>
+      <td>Target unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.target</code></td>
+      <td>一个 unit 服务组，用于模拟实现运行级别</td>
+    </tr>
+    <tr>
+      <td>Automount unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.automount</code></td>
+      <td>文件系统自动挂载点</td>
+    </tr>
+    <tr>
+      <td>Device unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.device</code></td>
+      <td>内核识别的设备文件</td>
+    </tr>
+    <tr>
+      <td>Mount unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.mount</code></td>
+      <td>文件系统挂载点</td>
+    </tr>
+    <tr>
+      <td>Path unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.path</code></td>
+      <td>文件或目录</td>
+    </tr>
+    <tr>
+      <td>Scope unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.scope</code></td>
+      <td>外部创建的进程</td>
+    </tr>
+    <tr>
+      <td>Slice unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.slice</code></td>
+      <td>A group of hierarchically organized units that manage system processes.</td>
+    </tr>
+    <tr>
+      <td>Snapshot unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.snapshot</code></td>
+      <td>系统快照</td>
+    </tr>
+    <tr>
+      <td>Socket unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.socket</code></td>
+      <td>套接字</td>
+    </tr>
+    <tr>
+      <td>Swap unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.swap</code></td>
+      <td>标识 swap 设备</td>
+    </tr>
+    <tr>
+      <td>Timer unit</td>
+      <td><code class="language-plaintext highlighter-rouge">.timer</code></td>
+      <td>systemd 的计时器</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>unit 文件保存位置</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Directory</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>/usr/lib/systemd/system/</td>
+      <td>RPM 包安装时分发的 unit 文件</td>
+    </tr>
+    <tr>
+      <td>/run/systemd/system/</td>
+      <td>systemd 运行时创建的文件</td>
+    </tr>
+    <tr>
+      <td>/etc/systemd/system/</td>
+      <td>systemctl enable 创建的 unit 文件</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="管理系统服务">管理系统服务</h3>
+<p>systemd 的主要命令行工具是  <code class="language-plaintext highlighter-rouge">systemctl</code> 。</p>
+
+<p>多数管理员应该都已经非常熟悉系统服务和 init 系统的管理，比如 service、chkconfig 以及 telinit 命令的使用。
+systemd 也完成同样的管理任务，只是命令工具 systemctl 的语法有所不同而已。</p>
+
+<p>systemd 命令和 sysvinit 命令对比:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>service</th>
+      <th>systemctl</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>service name start</td>
+      <td>systemctl start name.service</td>
+      <td>启动服务</td>
+    </tr>
+    <tr>
+      <td>service name stop</td>
+      <td>systemctl stop name.service</td>
+      <td>停止服务</td>
+    </tr>
+    <tr>
+      <td>service name restart</td>
+      <td>systemctl restart name.service</td>
+      <td>重启服务（没启动的服务会启动）</td>
+    </tr>
+    <tr>
+      <td>service namecondrestart</td>
+      <td>systemctl try-restart name.service</td>
+      <td>只重启正在运行的服务</td>
+    </tr>
+    <tr>
+      <td>service name reload</td>
+      <td>systemctl reload name.service</td>
+      <td>重载配置文件</td>
+    </tr>
+    <tr>
+      <td>service name status</td>
+      <td>systemctl status name.service</td>
+      <td>检查服务状态</td>
+    </tr>
+    <tr>
+      <td>service name status</td>
+      <td>systemctl is-active name.service</td>
+      <td>检查服务是否启动</td>
+    </tr>
+    <tr>
+      <td>service –status-all</td>
+      <td>systemctl list-units –type service –all</td>
+      <td>显示所有的服务状态</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>chkconfig 和 systemctl 命令对比:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>chkconfig</th>
+      <th>systemctl</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>chkconfig name on</td>
+      <td>systemctl enable name.service</td>
+      <td>启用开机自启服务</td>
+    </tr>
+    <tr>
+      <td>chkconfig name off</td>
+      <td>systemctl disable name.service</td>
+      <td>停用自启服务</td>
+    </tr>
+    <tr>
+      <td>chkconfig –list name</td>
+      <td>systemctl status name.service</td>
+      <td>检查服务状态</td>
+    </tr>
+    <tr>
+      <td>chkconfig –list name</td>
+      <td>systemctl is-enabled name.service</td>
+      <td>查看服务是否自启</td>
+    </tr>
+    <tr>
+      <td>chkconfig –list</td>
+      <td>systemctl list-unit-files –type service</td>
+      <td>查看所有服务</td>
+    </tr>
+    <tr>
+      <td>chkconfig –list</td>
+      <td>systemctl list-dependencies –after</td>
+      <td>列出在指定服务之前启动的服务（依赖）</td>
+    </tr>
+    <tr>
+      <td>chkconfig –list</td>
+      <td>systemctl list-dependencies –before</td>
+      <td>列出在指定服务之后启动的服务（被依赖）</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h3 id="参考资料">参考资料</h3>
+
+<ol>
+  <li>
+    <p><a href="https://wiki.archlinux.org/index.php/systemd">systemd - ArchWiki</a></p>
+  </li>
+  <li>
+    <p><a href="https://linux.cn/article-5926-1.html">systemctl 命令完全指南</a></p>
+  </li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/tool" class="page__taxonomy-item p-category" rel="tag">Tool</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/linux" class="page__taxonomy-item p-category" rel="tag">Linux</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2019-05-12T09:30:00+08:00">2019年05月12日</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/problems/split-a-string-in-balanced-strings/" class="pagination--pager" title="分割平衡字符串
+">上一页</a>
+    
+    
+      <a href="/go-cmd-pipe/" class="pagination--pager" title="Go系统命令管道操作
+">下一页</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/guide/frequently-asked-questions/" rel="permalink">常见问题解答
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">搜索包含指定内容的文件
+# 方法一
+$ grep "指定内容" -rl /path/to/dir
+# 方法二
+$ find /path/to/dir -type f [-maxdepth n] [-mindepth n] -print0 |xargs -0 grep "指定内容"  
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence/" rel="permalink">检查单词是否为句中其他单词的前缀
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1455. 检查单词是否为句中其他单词的前缀 (Easy)
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/problems/destination-city/" rel="permalink">旅行终点站
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1436. 旅行终点站 (Easy)
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ticker-or-sleep/" rel="permalink">Ticker or Sleep
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Go编程中，经常会遇到周期性处理任务的需求，下面以每秒打印一次当前时间为例介绍实现方式及区别
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/awesee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">
+  <div style="position: absolute;">
+    &copy; 2022 Shuo.
+  </div>
+  <div style="text-align: center;">
+    <a href="https://beian.miit.gov.cn/">豫ICP备2021037555号-1</a>
+  </div>
+</div>
+
+      </footer>
+    </div>
+
+    
+  
+    <script src="/assets/js/main.min.js"></script>
+  
+    <script src="/assets/js/fontawesome/5.7.1/all.js"></script>
+  
+    <script src="/assets/js/global.js"></script>
+  
+    <script src="/assets/js/love.js"></script>
+  
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-103591670-1']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

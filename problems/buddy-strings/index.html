@@ -1,0 +1,751 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="zh" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>亲密字符串 - 我的知识学习记录</title>
+<meta name="description" content="859. 亲密字符串 (Easy)">
+
+
+  <meta name="author" content="Shuo">
+  
+  <meta property="article:author" content="Shuo">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:site_name" content="我的知识学习记录">
+<meta property="og:title" content="亲密字符串">
+<meta property="og:url" content="/problems/buddy-strings/">
+
+
+  <meta property="og:description" content="859. 亲密字符串 (Easy)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2018-05-09T21:30:00+08:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/problems/buddy-strings/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Shuo",
+      "url": "/"
+    
+  }
+</script>
+
+
+  <meta name="google-site-verification" content="googled6f77d9aafcbfa9e" />
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="我的知识学习记录 Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#aa00ff">
+<meta name="msapplication-TileColor" content="#00a300">
+<meta name="theme-color" content="#ffffff">
+<meta name="referrer" content="no-referrer"/>
+
+<style type="text/css">
+    a {
+        text-decoration: none;
+    }
+
+    .search-content .search-input {
+        border: 1px solid #afafaf;
+        padding: 0.25em 0.5em;
+    }
+
+    .page__footer {
+        position: relative;
+        background-color: transparent;
+        border-top: 1px solid #f3f3f3;
+        margin-top: 2em;
+    }
+
+    .page__footer-follow li {
+        text-transform: none;
+    }
+</style>
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo.png" alt="我的知识学习记录"></a>
+        
+        <a class="site-title" href="/">
+          我的知识学习记录
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/post-archive">All</a>
+            </li><li class="masthead__menu-item">
+              <a href="https://github.com/awesee">GitHub</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">搜索</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">菜单</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="/">
+        <img src="/assets/images/photo.jpg" alt="Shuo" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="/" itemprop="url">Shuo</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Learning by doing!</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">China</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:openset.wang@gmail.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://awesee.github.io/" rel="nofollow noopener noreferrer me" itemprop="sameAs"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Website</span></a></li>
+          
+        
+          
+        
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://github.com/awesee" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+            <i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+        <li>
+          <a href="https://www.weibo.com/2893417981" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+            <i class="fab fa-fw fa-weibo" aria-hidden="true"></i><span class="label">Weibo</span>
+          </a>
+        </li>
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="亲密字符串">
+    <meta itemprop="description" content="859. 亲密字符串 (Easy)">
+    <meta itemprop="datePublished" content="2018年05月09日">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">亲密字符串
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+
+
+  3 分钟读完
+
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="859-亲密字符串-easy">859. 亲密字符串 (Easy)</h2>
+
+<p>给定两个由小写字母构成的字符串 <code>A</code> 和 <code>B</code> ，只要我们可以通过交换 <code>A</code> 中的两个字母得到与 <code>B</code> 相等的结果，就返回 <code>true</code> ；否则返回 <code>false</code> 。</p>
+
+<p>交换字母的定义是取两个下标 <code>i</code> 和 <code>j</code> （下标从 <code>0</code> 开始），只要 <code>i!=j</code> 就交换 <code>A[i]</code> 和 <code>A[j]</code> 处的字符。例如，在 <code>"abcd"</code> 中交换下标 <code>0</code> 和下标 <code>2</code> 的元素可以生成 <code>"cbad"</code> 。</p>
+
+<p> </p>
+
+<p><strong>示例 1：</strong></p>
+
+<pre>
+<strong>输入： </strong>A = "ab", B = "ba"
+<strong>输出： </strong>true<strong>
+解释： </strong>你可以交换 A[0] = 'a' 和 A[1] = 'b' 生成 "ba"，此时 A 和 B 相等。</pre>
+
+<p><strong>示例 2：</strong></p>
+
+<pre>
+<strong>输入： </strong>A = "ab", B = "ab"
+<strong>输出： </strong>false
+<strong>解释： </strong>你只能交换 A[0] = 'a' 和 A[1] = 'b' 生成 "ba"，此时 A 和 B 不相等。
+</pre>
+
+<p><strong>示例 3:</strong></p>
+
+<pre>
+<strong>输入： </strong>A = "aa", B = "aa"
+<strong>输出： </strong>true
+<strong>解释： </strong>你可以交换 A[0] = 'a' 和 A[1] = 'a' 生成 "aa"，此时 A 和 B 相等。</pre>
+
+<p><strong>示例 4：</strong></p>
+
+<pre>
+<strong>输入： </strong>A = "aaaaaaabc", B = "aaaaaaacb"
+<strong>输出： </strong>true
+</pre>
+
+<p><strong>示例 5：</strong></p>
+
+<pre>
+<strong>输入： </strong>A = "", B = "aa"
+<strong>输出： </strong>false
+</pre>
+
+<p> </p>
+
+<p><strong>提示：</strong></p>
+
+<ol>
+	<li><code>0 &lt;= A.length &lt;= 20000</code></li>
+	<li><code>0 &lt;= B.length &lt;= 20000</code></li>
+	<li><code>A</code> 和 <code>B</code> 仅由小写字母构成。</li>
+</ol>
+
+<h3 id="相关话题">相关话题</h3>
+<p>[<a href="https://github.com/awesee/leetcode/tree/main/tag/hash-table/README.md">哈希表</a>]
+  [<a href="https://github.com/awesee/leetcode/tree/main/tag/string/README.md">字符串</a>]</p>
+
+<hr />
+
+<h2 id="解法"><a href="https://github.com/awesee/leetcode/tree/main/problems/buddy-strings">解法</a></h2>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 标签: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/hash-table" class="page__taxonomy-item p-category" rel="tag">Hash Table</a><span class="sep">, </span>
+    
+      <a href="/tags/string" class="page__taxonomy-item p-category" rel="tag">String</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 分类: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/leetcode" class="page__taxonomy-item p-category" rel="tag">Leetcode</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 更新时间:</strong> <time datetime="2018-05-09T21:30:00+08:00">2018年05月09日</time></p>
+        
+      </footer>
+
+      
+
+      
+  <nav class="pagination">
+    
+      <a href="/problems/maximize-distance-to-closest-person/" class="pagination--pager" title="到最近的人的最大距离
+">上一页</a>
+    
+    
+      <a href="/problems/transpose-matrix/" class="pagination--pager" title="转置矩阵
+">下一页</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">猜您还喜欢</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/guide/frequently-asked-questions/" rel="permalink">常见问题解答
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">搜索包含指定内容的文件
+# 方法一
+$ grep "指定内容" -rl /path/to/dir
+# 方法二
+$ find /path/to/dir -type f [-maxdepth n] [-mindepth n] -print0 |xargs -0 grep "指定内容"  
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence/" rel="permalink">检查单词是否为句中其他单词的前缀
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1455. 检查单词是否为句中其他单词的前缀 (Easy)
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/problems/destination-city/" rel="permalink">旅行终点站
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">1436. 旅行终点站 (Easy)
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ticker-or-sleep/" rel="permalink">Ticker or Sleep
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          少于 1 分钟读完
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Go编程中，经常会遇到周期性处理任务的需求，下面以每秒打印一次当前时间为例介绍实现方式及区别
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="输入您要搜索的关键词..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+
+    
+      
+        
+      
+        
+      
+        
+          <li><a href="https://github.com/awesee" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+      
+        
+      
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">
+  <div style="position: absolute;">
+    &copy; 2022 Shuo.
+  </div>
+  <div style="text-align: center;">
+    <a href="https://beian.miit.gov.cn/">豫ICP备2021037555号-1</a>
+  </div>
+</div>
+
+      </footer>
+    </div>
+
+    
+  
+    <script src="/assets/js/main.min.js"></script>
+  
+    <script src="/assets/js/fontawesome/5.7.1/all.js"></script>
+  
+    <script src="/assets/js/global.js"></script>
+  
+    <script src="/assets/js/love.js"></script>
+  
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+  <script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-103591670-1']);
+  
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.2">Jekyll</generator><link href="https://blog.awesee.cn/feed.xml" rel="self" type="application/atom+xml" /><link href="https://blog.awesee.cn/" rel="alternate" type="text/html" /><updated>2022-11-09T09:51:12+08:00</updated><id>https://blog.awesee.cn/feed.xml</id><title type="html">我的知识学习记录</title><subtitle>王硕的个人网站</subtitle><author><name>Shuo</name></author><entry><title type="html">常见问题解答</title><link href="https://blog.awesee.cn/guide/frequently-asked-questions/" rel="alternate" type="text/html" title="常见问题解答" /><published>2022-05-01T15:04:05+08:00</published><updated>2022-05-01T15:04:05+08:00</updated><id>https://blog.awesee.cn/guide/frequently-asked-questions</id><content type="html" xml:base="https://blog.awesee.cn/guide/frequently-asked-questions/">&lt;h2 id=&quot;搜索包含指定内容的文件&quot;&gt;搜索包含指定内容的文件&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 方法一&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;指定内容&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rl&lt;/span&gt; /path/to/dir
+&lt;span class=&quot;c&quot;&gt;# 方法二&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;find /path/to/dir &lt;span class=&quot;nt&quot;&gt;-type&lt;/span&gt; f &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-maxdepth&lt;/span&gt; n] &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;-mindepth&lt;/span&gt; n] &lt;span class=&quot;nt&quot;&gt;-print0&lt;/span&gt; |xargs &lt;span class=&quot;nt&quot;&gt;-0&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;指定内容&quot;&lt;/span&gt;  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;创建指定大小不占磁盘空间的文件&quot;&gt;创建指定大小，不占磁盘空间的文件&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dd &lt;/span&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/dev/null &lt;span class=&quot;nv&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/path/to/file &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;bs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1024] &lt;span class=&quot;nv&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0 &lt;span class=&quot;nv&quot;&gt;seek&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;20000000
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;镜像网站&quot;&gt;镜像网站&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;wget &lt;span class=&quot;nt&quot;&gt;--mirror&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--convert-links&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--adjust-extension&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--page-requisites&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--no-parent&lt;/span&gt; https://www.example.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;获取图片详细信息&quot;&gt;获取图片详细信息&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;identify &lt;span class=&quot;nt&quot;&gt;-verbose&lt;/span&gt; example.jpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;m3u8-download&quot;&gt;M3U8 Download&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ffmpeg &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; https://example.com/index.m3u8 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; copy out.mp4
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;mac-允许任何来源&quot;&gt;Mac 允许任何来源&lt;/h2&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;spctl &lt;span class=&quot;nt&quot;&gt;--master-disable&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;计算机常见术语及缩写&quot;&gt;计算机常见术语及缩写&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;/guide-abbreviations&quot;&gt;Abbreviations&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;what-does-el5-el6-and-el7-mean&quot;&gt;What does el5, el6, and el7 mean?&lt;/h2&gt;
+
+&lt;p&gt;EL is short for Red Hat Enterprise Linux (EL).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;EL5 is the download for Red Hat 5.x, CentOS 5.x, CloudLinux 5.x.&lt;/li&gt;
+  &lt;li&gt;EL6 is the download for Red Hat 6.x, CentOS 6.x, and CloudLinux 6.x.&lt;/li&gt;
+  &lt;li&gt;EL7 is the download for Red Hat 7.x, CentOS 7.x, and CloudLinux 7.x.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;the-netrc-file&quot;&gt;The .netrc file&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://linux.die.net/man/5/netrc&quot;&gt;netrc, .netrc&lt;/a&gt; - user configuration for ftp&lt;/p&gt;</content><author><name>Shuo</name></author><category term="Guide" /><category term="Guide" /><summary type="html">搜索包含指定内容的文件 # 方法一 $ grep &quot;指定内容&quot; -rl /path/to/dir # 方法二 $ find /path/to/dir -type f [-maxdepth n] [-mindepth n] -print0 |xargs -0 grep &quot;指定内容&quot;</summary></entry><entry><title type="html">检查单词是否为句中其他单词的前缀</title><link href="https://blog.awesee.cn/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence/" rel="alternate" type="text/html" title="检查单词是否为句中其他单词的前缀" /><published>2019-12-26T21:30:00+08:00</published><updated>2019-12-26T21:30:00+08:00</updated><id>https://blog.awesee.cn/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence</id><content type="html" xml:base="https://blog.awesee.cn/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence/">&lt;h2 id=&quot;1455-检查单词是否为句中其他单词的前缀-easy&quot;&gt;1455. 检查单词是否为句中其他单词的前缀 (Easy)&lt;/h2&gt;
+
+&lt;p&gt;给你一个字符串 &lt;code&gt;sentence&lt;/code&gt; 作为句子并指定检索词为 &lt;code&gt;searchWord&lt;/code&gt; ，其中句子由若干用 &lt;strong&gt;单个空格&lt;/strong&gt; 分隔的单词组成。&lt;/p&gt;
+
+&lt;p&gt;请你检查检索词 &lt;code&gt;searchWord&lt;/code&gt; 是否为句子 &lt;code&gt;sentence&lt;/code&gt; 中任意单词的前缀。&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;如果 &lt;code&gt;searchWord&lt;/code&gt; 是某一个单词的前缀，则返回句子 &lt;code&gt;sentence&lt;/code&gt; 中该单词所对应的下标（&lt;strong&gt;下标从 1 开始&lt;/strong&gt;）。&lt;/li&gt;
+	&lt;li&gt;如果 &lt;code&gt;searchWord&lt;/code&gt; 是多个单词的前缀，则返回匹配的第一个单词的下标（&lt;strong&gt;最小下标&lt;/strong&gt;）。&lt;/li&gt;
+	&lt;li&gt;如果 &lt;code&gt;searchWord&lt;/code&gt; 不是任何单词的前缀，则返回 &lt;strong&gt;-1 &lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;字符串 &lt;code&gt;S&lt;/code&gt; 的 &lt;strong&gt;前缀&lt;/strong&gt; 是 &lt;code&gt;S&lt;/code&gt; 的任何前导连续子字符串。&lt;/p&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;sentence = &quot;i love eating burger&quot;, searchWord = &quot;burg&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;4
+&lt;strong&gt;解释：&lt;/strong&gt;&quot;burg&quot; 是 &quot;burger&quot; 的前缀，而 &quot;burger&quot; 是句子中第 4 个单词。&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;sentence = &quot;this problem is an easy problem&quot;, searchWord = &quot;pro&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;2
+&lt;strong&gt;解释：&lt;/strong&gt;&quot;pro&quot; 是 &quot;problem&quot; 的前缀，而 &quot;problem&quot; 是句子中第 2 个也是第 6 个单词，但是应该返回最小下标 2 。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;sentence = &quot;i am tired&quot;, searchWord = &quot;you&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;-1
+&lt;strong&gt;解释：&lt;/strong&gt;&quot;you&quot; 不是句子中任何单词的前缀。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;sentence = &quot;i use triple pillow&quot;, searchWord = &quot;pill&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;4
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 5：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;sentence = &quot;hello from the other side&quot;, searchWord = &quot;they&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;-1
+&lt;/pre&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;= sentence.length &amp;lt;= 100&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;= searchWord.length &amp;lt;= 10&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;sentence&lt;/code&gt; 由小写英文字母和空格组成。&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;searchWord&lt;/code&gt; 由小写英文字母组成。&lt;/li&gt;
+	&lt;li&gt;前缀就是紧密附着于词根的语素，中间不能插入其它成分，并且它的位置是固定的——-位于词根之前。（引用自 &lt;a href=&quot;https://baike.baidu.com/item/%E5%89%8D%E7%BC%80&quot; target=&quot;_blank&quot;&gt;前缀_百度百科&lt;/a&gt; ）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;相关话题&quot;&gt;相关话题&lt;/h3&gt;
+&lt;p&gt;[&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/string/README.md&quot;&gt;字符串&lt;/a&gt;]
+  [&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/string-matching/README.md&quot;&gt;字符串匹配&lt;/a&gt;]&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;解法&quot;&gt;&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/problems/check-if-a-word-occurs-as-a-prefix-of-any-word-in-a-sentence&quot;&gt;解法&lt;/a&gt;&lt;/h2&gt;</content><author><name>Shuo</name></author><category term="Leetcode" /><category term="String" /><category term="String Matching" /><summary type="html">1455. 检查单词是否为句中其他单词的前缀 (Easy)</summary></entry><entry><title type="html">旅行终点站</title><link href="https://blog.awesee.cn/problems/destination-city/" rel="alternate" type="text/html" title="旅行终点站" /><published>2019-12-07T21:30:00+08:00</published><updated>2019-12-07T21:30:00+08:00</updated><id>https://blog.awesee.cn/problems/destination-city</id><content type="html" xml:base="https://blog.awesee.cn/problems/destination-city/">&lt;h2 id=&quot;1436-旅行终点站-easy&quot;&gt;1436. 旅行终点站 (Easy)&lt;/h2&gt;
+
+&lt;p&gt;给你一份旅游线路图，该线路图中的旅行线路用数组 &lt;code&gt;paths&lt;/code&gt; 表示，其中 &lt;code&gt;paths[i] = [cityA&lt;sub&gt;i&lt;/sub&gt;, cityB&lt;sub&gt;i&lt;/sub&gt;]&lt;/code&gt; 表示该线路将会从 &lt;code&gt;cityA&lt;sub&gt;i&lt;/sub&gt;&lt;/code&gt; 直接前往 &lt;code&gt;cityB&lt;sub&gt;i&lt;/sub&gt;&lt;/code&gt; 。请你找出这次旅行的终点站，即没有任何可以通往其他城市的线路的城市&lt;em&gt;。&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;题目数据保证线路图会形成一条不存在循环的线路，因此只会有一个旅行终点站。&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;paths = [[&amp;quot;London&amp;quot;,&amp;quot;New York&amp;quot;],[&amp;quot;New York&amp;quot;,&amp;quot;Lima&amp;quot;],[&amp;quot;Lima&amp;quot;,&amp;quot;Sao Paulo&amp;quot;]]
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;Sao Paulo&amp;quot; 
+&lt;strong&gt;解释：&lt;/strong&gt;从 &amp;quot;London&amp;quot; 出发，最后抵达终点站 &amp;quot;Sao Paulo&amp;quot; 。本次旅行的路线是 &amp;quot;London&amp;quot; -&amp;gt; &amp;quot;New York&amp;quot; -&amp;gt; &amp;quot;Lima&amp;quot; -&amp;gt; &amp;quot;Sao Paulo&amp;quot; 。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;paths = [[&amp;quot;B&amp;quot;,&amp;quot;C&amp;quot;],[&amp;quot;D&amp;quot;,&amp;quot;B&amp;quot;],[&amp;quot;C&amp;quot;,&amp;quot;A&amp;quot;]]
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;A&amp;quot;
+&lt;strong&gt;解释：&lt;/strong&gt;所有可能的线路是：
+&amp;quot;D&amp;quot; -&amp;gt; &amp;quot;B&amp;quot; -&amp;gt; &amp;quot;C&amp;quot; -&amp;gt; &amp;quot;A&amp;quot;.&amp;nbsp;
+&amp;quot;B&amp;quot; -&amp;gt; &amp;quot;C&amp;quot; -&amp;gt; &amp;quot;A&amp;quot;.&amp;nbsp;
+&amp;quot;C&amp;quot; -&amp;gt; &amp;quot;A&amp;quot;.&amp;nbsp;
+&amp;quot;A&amp;quot;.&amp;nbsp;
+显然，旅行终点站是 &amp;quot;A&amp;quot; 。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;paths = [[&amp;quot;A&amp;quot;,&amp;quot;Z&amp;quot;]]
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;Z&amp;quot;
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;= paths.length &amp;lt;= 100&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;paths[i].length == 2&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;=&amp;nbsp;cityA&lt;sub&gt;i&lt;/sub&gt;.length,&amp;nbsp;cityB&lt;sub&gt;i&lt;/sub&gt;.length &amp;lt;= 10&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;cityA&lt;sub&gt;i&amp;nbsp;&lt;/sub&gt;!=&amp;nbsp;cityB&lt;sub&gt;i&lt;/sub&gt;&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;所有字符串均由大小写英文字母和空格字符组成。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;相关话题&quot;&gt;相关话题&lt;/h3&gt;
+&lt;p&gt;[&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/hash-table/README.md&quot;&gt;哈希表&lt;/a&gt;]
+  [&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/string/README.md&quot;&gt;字符串&lt;/a&gt;]&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;解法&quot;&gt;&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/problems/destination-city&quot;&gt;解法&lt;/a&gt;&lt;/h2&gt;</content><author><name>Shuo</name></author><category term="Leetcode" /><category term="Hash Table" /><category term="String" /><summary type="html">1436. 旅行终点站 (Easy)</summary></entry><entry><title type="html">Ticker or Sleep</title><link href="https://blog.awesee.cn/ticker-or-sleep/" rel="alternate" type="text/html" title="Ticker or Sleep" /><published>2019-11-30T18:30:00+08:00</published><updated>2019-11-30T18:30:00+08:00</updated><id>https://blog.awesee.cn/ticker-or-sleep</id><content type="html" xml:base="https://blog.awesee.cn/ticker-or-sleep/">&lt;p&gt;Go编程中，经常会遇到周期性处理任务的需求，下面以每秒打印一次当前时间为例介绍实现方式及区别&lt;/p&gt;
+
+&lt;h3 id=&quot;方法一ticker&quot;&gt;方法一（Ticker）&lt;/h3&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PrintNow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewTicker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;方法二sleep&quot;&gt;方法二（Sleep）&lt;/h3&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PrintNow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;以上2种方法都可以实现每秒打印一次当前时间，但是2种方式有很大区别。&lt;/p&gt;
+
+&lt;p&gt;cpu：方法一cpu占用大于方法二，因为方法一会有一个单独的协程用于定时向chan写入当前时间。&lt;/p&gt;
+
+&lt;p&gt;执行时间：方法一小于方法二，实际上方法二并不是每秒打印一次当前时间，
+间隔时间其实还包含打印当前时间的执行时间。如果把&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fmt.Println(time.Now())&lt;/code&gt;改为&lt;/p&gt;
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;500&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Millisecond&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Now&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;结果就很明显，方法一是每秒打印一次当前时间，方法二是每1.5秒打印一次当前时间&lt;/p&gt;
+
+&lt;p&gt;方法一是两个协程并发执行，方法二是一个协程串行执行&lt;/p&gt;</content><author><name>Shuo</name></author><category term="Go" /><category term="Go" /><category term="Guide" /><summary type="html">Go编程中，经常会遇到周期性处理任务的需求，下面以每秒打印一次当前时间为例介绍实现方式及区别</summary></entry><entry><title type="html">分割字符串的最大得分</title><link href="https://blog.awesee.cn/problems/maximum-score-after-splitting-a-string/" rel="alternate" type="text/html" title="分割字符串的最大得分" /><published>2019-11-23T21:30:00+08:00</published><updated>2019-11-23T21:30:00+08:00</updated><id>https://blog.awesee.cn/problems/maximum-score-after-splitting-a-string</id><content type="html" xml:base="https://blog.awesee.cn/problems/maximum-score-after-splitting-a-string/">&lt;h2 id=&quot;1422-分割字符串的最大得分-easy&quot;&gt;1422. 分割字符串的最大得分 (Easy)&lt;/h2&gt;
+
+&lt;p&gt;给你一个由若干 0 和 1 组成的字符串 &lt;code&gt;s&lt;/code&gt; ，请你计算并返回将该字符串分割成两个 &lt;strong&gt;非空&lt;/strong&gt; 子字符串（即&amp;nbsp;&lt;strong&gt;左&lt;/strong&gt; 子字符串和 &lt;strong&gt;右&lt;/strong&gt; 子字符串）所能获得的最大得分。&lt;/p&gt;
+
+&lt;p&gt;「分割字符串的得分」为 &lt;strong&gt;左&lt;/strong&gt; 子字符串中 &lt;strong&gt;0&lt;/strong&gt; 的数量加上 &lt;strong&gt;右&lt;/strong&gt; 子字符串中 &lt;strong&gt;1&lt;/strong&gt; 的数量。&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;011101&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;5 
+&lt;strong&gt;解释：&lt;/strong&gt;
+将字符串 s 划分为两个非空子字符串的可行方案有：
+左子字符串 = &amp;quot;0&amp;quot; 且 右子字符串 = &amp;quot;11101&amp;quot;，得分 = 1 + 4 = 5 
+左子字符串 = &amp;quot;01&amp;quot; 且 右子字符串 = &amp;quot;1101&amp;quot;，得分 = 1 + 3 = 4 
+左子字符串 = &amp;quot;011&amp;quot; 且 右子字符串 = &amp;quot;101&amp;quot;，得分 = 1 + 2 = 3 
+左子字符串 = &amp;quot;0111&amp;quot; 且 右子字符串 = &amp;quot;01&amp;quot;，得分 = 1 + 1 = 2 
+左子字符串 = &amp;quot;01110&amp;quot; 且 右子字符串 = &amp;quot;1&amp;quot;，得分 = 2 + 1 = 3
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;00111&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;5
+&lt;strong&gt;解释：&lt;/strong&gt;当 左子字符串 = &amp;quot;00&amp;quot; 且 右子字符串 = &amp;quot;111&amp;quot; 时，我们得到最大得分 = 2 + 3 = 5
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;1111&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;3
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;2 &amp;lt;= s.length &amp;lt;= 500&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;字符串 &lt;code&gt;s&lt;/code&gt; 仅由字符 &lt;code&gt;&amp;#39;0&amp;#39;&lt;/code&gt; 和 &lt;code&gt;&amp;#39;1&amp;#39;&lt;/code&gt; 组成。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;相关话题&quot;&gt;相关话题&lt;/h3&gt;
+&lt;p&gt;[&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/string/README.md&quot;&gt;字符串&lt;/a&gt;]&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;解法&quot;&gt;&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/problems/maximum-score-after-splitting-a-string&quot;&gt;解法&lt;/a&gt;&lt;/h2&gt;</content><author><name>Shuo</name></author><category term="Leetcode" /><category term="String" /><summary type="html">1422. 分割字符串的最大得分 (Easy)</summary></entry><entry><title type="html">重新格式化字符串</title><link href="https://blog.awesee.cn/problems/reformat-the-string/" rel="alternate" type="text/html" title="重新格式化字符串" /><published>2019-11-18T21:30:00+08:00</published><updated>2019-11-18T21:30:00+08:00</updated><id>https://blog.awesee.cn/problems/reformat-the-string</id><content type="html" xml:base="https://blog.awesee.cn/problems/reformat-the-string/">&lt;h2 id=&quot;1417-重新格式化字符串-easy&quot;&gt;1417. 重新格式化字符串 (Easy)&lt;/h2&gt;
+
+&lt;p&gt;给你一个混合了数字和字母的字符串 &lt;code&gt;s&lt;/code&gt;，其中的字母均为小写英文字母。&lt;/p&gt;
+
+&lt;p&gt;请你将该字符串重新格式化，使得任意两个相邻字符的类型都不同。也就是说，字母后面应该跟着数字，而数字后面应该跟着字母。&lt;/p&gt;
+
+&lt;p&gt;请你返回 &lt;strong&gt;重新格式化后&lt;/strong&gt; 的字符串；如果无法按要求重新格式化，则返回一个 &lt;strong&gt;空字符串&lt;/strong&gt; 。&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;a0b1c2&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;0a1b2c&amp;quot;
+&lt;strong&gt;解释：&lt;/strong&gt;&amp;quot;0a1b2c&amp;quot; 中任意两个相邻字符的类型都不同。 &amp;quot;a0b1c2&amp;quot;, &amp;quot;0a1b2c&amp;quot;, &amp;quot;0c2a1b&amp;quot; 也是满足题目要求的答案。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;leetcode&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;&amp;quot;
+&lt;strong&gt;解释：&lt;/strong&gt;&amp;quot;leetcode&amp;quot; 中只有字母，所以无法满足重新格式化的条件。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;1229857369&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;&amp;quot;
+&lt;strong&gt;解释：&lt;/strong&gt;&amp;quot;1229857369&amp;quot; 中只有数字，所以无法满足重新格式化的条件。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;covid2019&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;c2o0v1i9d&amp;quot;
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 5：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;s = &amp;quot;ab123&amp;quot;
+&lt;strong&gt;输出：&lt;/strong&gt;&amp;quot;1a2b3&amp;quot;
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;= s.length &amp;lt;= 500&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;s&lt;/code&gt; 仅由小写英文字母和/或数字组成。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;相关话题&quot;&gt;相关话题&lt;/h3&gt;
+&lt;p&gt;[&lt;a href=&quot;https://github.com/awesee/leetcode/tree/master/tag/string/README.md&quot;&gt;字符串&lt;/a&gt;]&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;解法&quot;&gt;&lt;a href=&quot;https://github.com/awesee/leetcode/tree/master/problems/reformat-the-string&quot;&gt;解法&lt;/a&gt;&lt;/h2&gt;</content><author><name>Shuo</name></author><category term="Leetcode" /><category term="String" /><summary type="html">1417. 重新格式化字符串 (Easy)</summary></entry><entry><title type="html">数组中的字符串匹配</title><link href="https://blog.awesee.cn/problems/string-matching-in-an-array/" rel="alternate" type="text/html" title="数组中的字符串匹配" /><published>2019-11-09T21:30:00+08:00</published><updated>2019-11-09T21:30:00+08:00</updated><id>https://blog.awesee.cn/problems/string-matching-in-an-array</id><content type="html" xml:base="https://blog.awesee.cn/problems/string-matching-in-an-array/">&lt;h2 id=&quot;1408-数组中的字符串匹配-easy&quot;&gt;1408. 数组中的字符串匹配 (Easy)&lt;/h2&gt;
+
+&lt;p&gt;给你一个字符串数组 &lt;code&gt;words&lt;/code&gt; ，数组中的每个字符串都可以看作是一个单词。请你按 &lt;strong&gt;任意&lt;/strong&gt; 顺序返回 &lt;code&gt;words&lt;/code&gt; 中是其他单词的子字符串的所有单词。&lt;/p&gt;
+
+&lt;p&gt;如果你可以删除 &lt;code&gt;words[j]&lt;/code&gt;&amp;nbsp;最左侧和/或最右侧的若干字符得到 &lt;code&gt;word[i]&lt;/code&gt; ，那么字符串 &lt;code&gt;words[i]&lt;/code&gt; 就是 &lt;code&gt;words[j]&lt;/code&gt; 的一个子字符串。&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;words = [&amp;quot;mass&amp;quot;,&amp;quot;as&amp;quot;,&amp;quot;hero&amp;quot;,&amp;quot;superhero&amp;quot;]
+&lt;strong&gt;输出：&lt;/strong&gt;[&amp;quot;as&amp;quot;,&amp;quot;hero&amp;quot;]
+&lt;strong&gt;解释：&lt;/strong&gt;&amp;quot;as&amp;quot; 是 &amp;quot;mass&amp;quot; 的子字符串，&amp;quot;hero&amp;quot; 是 &amp;quot;superhero&amp;quot; 的子字符串。
+[&amp;quot;hero&amp;quot;,&amp;quot;as&amp;quot;] 也是有效的答案。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;words = [&amp;quot;leetcode&amp;quot;,&amp;quot;et&amp;quot;,&amp;quot;code&amp;quot;]
+&lt;strong&gt;输出：&lt;/strong&gt;[&amp;quot;et&amp;quot;,&amp;quot;code&amp;quot;]
+&lt;strong&gt;解释：&lt;/strong&gt;&amp;quot;et&amp;quot; 和 &amp;quot;code&amp;quot; 都是 &amp;quot;leetcode&amp;quot; 的子字符串。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;strong&gt;输入：&lt;/strong&gt;words = [&amp;quot;blue&amp;quot;,&amp;quot;green&amp;quot;,&amp;quot;bu&amp;quot;]
+&lt;strong&gt;输出：&lt;/strong&gt;[]
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;= words.length &amp;lt;= 100&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;= words[i].length &amp;lt;= 30&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;words[i]&lt;/code&gt; 仅包含小写英文字母。&lt;/li&gt;
+	&lt;li&gt;题目数据 &lt;strong&gt;保证&lt;/strong&gt; 每个 &lt;code&gt;words[i]&lt;/code&gt; 都是独一无二的。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;相关话题&quot;&gt;相关话题&lt;/h3&gt;
+&lt;p&gt;[&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/string/README.md&quot;&gt;字符串&lt;/a&gt;]
+  [&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/string-matching/README.md&quot;&gt;字符串匹配&lt;/a&gt;]&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;解法&quot;&gt;&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/problems/string-matching-in-an-array&quot;&gt;解法&lt;/a&gt;&lt;/h2&gt;</content><author><name>Shuo</name></author><category term="Leetcode" /><category term="String" /><category term="String Matching" /><summary type="html">1408. 数组中的字符串匹配 (Easy)</summary></entry><entry><title type="html">Go系统命令管道操作</title><link href="https://blog.awesee.cn/go-cmd-pipe/" rel="alternate" type="text/html" title="Go系统命令管道操作" /><published>2019-09-05T12:30:00+08:00</published><updated>2019-09-05T12:30:00+08:00</updated><id>https://blog.awesee.cn/go-cmd-pipe</id><content type="html" xml:base="https://blog.awesee.cn/go-cmd-pipe/">&lt;p&gt;go 执行系统命令时不能直接使用管道符 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;|&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;实现方法如下&quot;&gt;实现方法如下：&lt;/h2&gt;
+
+&lt;h3 id=&quot;方法一同步&quot;&gt;方法一（同步）&lt;/h3&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sync&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ls&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;grep&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;go&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stdout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stdout&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StdinPipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stdout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Wait&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;方法二异步&quot;&gt;方法二（异步）&lt;/h3&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;async&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ls&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;grep&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;go&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stdout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stdout&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StdoutPipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StdinPipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;defer&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}()&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;方法三串联&quot;&gt;方法三（串联）&lt;/h3&gt;
+
+&lt;div class=&quot;language-go highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ls&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;grep&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;go&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Command&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;grep&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;main&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stdout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stdout&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cmd3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;...*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Cmd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;range&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StdoutPipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StdinPipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;defer&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+				&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+			&lt;span class=&quot;p&quot;&gt;}()&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Copy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}()&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Shuo</name></author><category term="Go" /><category term="Go" /><category term="Guide" /><summary type="html">go 执行系统命令时不能直接使用管道符 |</summary></entry><entry><title type="html">systemd 服务</title><link href="https://blog.awesee.cn/linux/manage-services-using-systemctl-in-linux/" rel="alternate" type="text/html" title="systemd 服务" /><published>2019-05-12T09:30:00+08:00</published><updated>2019-05-12T09:30:00+08:00</updated><id>https://blog.awesee.cn/linux/manage-services-using-systemctl-in-linux</id><content type="html" xml:base="https://blog.awesee.cn/linux/manage-services-using-systemctl-in-linux/">&lt;p&gt;systemd 是一个 Linux 系统基础组件的集合，提供了一个系统和服务管理器，运行为 PID 1 并负责启动其它程序。
+功能包括：支持并行化任务；同时采用 socket 式与 D-Bus 总线式激活服务；按需启动守护进程（daemon）；
+利用 Linux 的 cgroups 监视进程；支持快照和系统恢复；维护挂载点和自动挂载点；各服务间基于依赖关系进行精密控制。
+systemd 支持 SysV 和 LSB 初始脚本，可以替代 sysvinit。
+除此之外，功能还包括日志进程、控制基础系统配置，维护登陆用户列表以及系统账户、运行时目录和设置，可以运行容器和虚拟机，
+可以简单的管理网络配置、网络时间同步、日志转发和名称解析等。&lt;/p&gt;
+
+&lt;h3 id=&quot;systemd-简介&quot;&gt;systemd 简介&lt;/h3&gt;
+&lt;p&gt;首先 systemd 是一个用户空间的程序，属于应用程序，不属于 Linux 内核范畴。
+systemd 是 Linux 系统中最新的初始化系统（init），它主要的设计目标是克服 sysvinit 固有的缺点，提高系统的启动速度。&lt;/p&gt;
+
+&lt;p&gt;Linux内核加载启动后，用户空间的第一个进程就是初始化进程，这个程序的物理文件约定位于/sbin/init，
+当然也可以通过传递内核参数来让内核启动指定的程序。这个进程的特点是进程号为1，代表第一个运行的用户空间进程。
+不同发行版采用了不同的启动程序，主要有以下几种主流选择：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;以 Ubuntu 为代表的 Linux 发行版采用 upstart&lt;/li&gt;
+  &lt;li&gt;CentOS7.0 版本之前的 System V init&lt;/li&gt;
+  &lt;li&gt;CentOS7.0 版本的 systemd&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;systemd 架构图:
+&lt;img src=&quot;/assets/images/posts/20190512093000.png&quot; alt=&quot;file&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;systemd-基本使用&quot;&gt;systemd 基本使用&lt;/h3&gt;
+
+&lt;p&gt;查看当前安装的版本&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt;
+
+systemd 219
++PAM +AUDIT +SELINUX +IMA &lt;span class=&quot;nt&quot;&gt;-APPARMOR&lt;/span&gt; +SMACK +SYSVINIT +UTMP +LIBCRYPTSETUP +GCRYPT +GNUTLS +ACL +XZ +LZ4 &lt;span class=&quot;nt&quot;&gt;-SECCOMP&lt;/span&gt; +BLKID +ELFUTILS +KMOD +IDN
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;分析系统状态&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;输出激活的单元&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl 
+或
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl list-units
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;输出运行失败的单元&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl &lt;span class=&quot;nt&quot;&gt;--failed&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;所有可用的单元文件存放在 /usr/lib/systemd/system/ 和 /etc/systemd/system/ 目录（后者优先级更高）。查看所有已安装服务：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemctl list-unit-files
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;系统管理&quot;&gt;系统管理&lt;/h3&gt;
+&lt;p&gt;systemd 并不是一个命令，而是一组命令，涉及到系统管理的方方面面。&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 重启系统&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl reboot
+
+&lt;span class=&quot;c&quot;&gt;# 关闭系统，切断电源&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl poweroff
+
+&lt;span class=&quot;c&quot;&gt;# CPU停止工作&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl halt
+
+&lt;span class=&quot;c&quot;&gt;# 暂停系统&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl &lt;span class=&quot;nb&quot;&gt;suspend&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 让系统进入冬眠状态&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl hibernate
+
+&lt;span class=&quot;c&quot;&gt;# 让系统进入交互式休眠状态&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl hybrid-sleep
+
+&lt;span class=&quot;c&quot;&gt;# 启动进入救援状态（单用户状态）&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;systemctl rescue
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systemd-analyze&lt;/code&gt; 命令用于查看启动耗时&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 查看启动耗时&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemd-analyze                                                                                       
+
+&lt;span class=&quot;c&quot;&gt;# 查看每个服务的启动耗时&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemd-analyze blame
+
+&lt;span class=&quot;c&quot;&gt;# 显示瀑布状的启动过程流&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemd-analyze critical-chain
+
+&lt;span class=&quot;c&quot;&gt;# 显示指定服务的启动流&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;systemd-analyze critical-chain atd.service
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;hostnamectl&lt;/code&gt; 命令用于查看当前主机的信息&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 显示当前主机的信息&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;hostnamectl
+
+&lt;span class=&quot;c&quot;&gt;# 设置主机名。&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;hostnamectl set-hostname awesee
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localectl&lt;/code&gt; 命令用于查看本地化设置&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 查看本地化设置&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;localectl
+
+&lt;span class=&quot;c&quot;&gt;# 设置本地化参数。&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;localectl set-locale &lt;span class=&quot;nv&quot;&gt;LANG&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;zh_CN.utf8
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;localectl set-keymap zh_CN
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;timedatectl&lt;/code&gt; 命令用于查看当前时区设置&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 查看当前时区设置&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;timedatectl
+
+&lt;span class=&quot;c&quot;&gt;# 显示所有可用的时区&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;timedatectl list-timezones                                                                                   
+
+&lt;span class=&quot;c&quot;&gt;# 设置当前时区&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;timedatectl set-timezone Asia/Shanghai
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;timedatectl set-time YYYY-MM-DD
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;timedatectl set-time HH:MM:SS
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;loginctl&lt;/code&gt; 命令用于查看当前登录的用户&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 列出当前session&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;loginctl list-sessions
+
+&lt;span class=&quot;c&quot;&gt;# 列出当前登录用户&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;loginctl list-users
+
+&lt;span class=&quot;c&quot;&gt;# 列出显示指定用户的信息&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;loginctl show-user shuo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;systemd-unit&quot;&gt;systemd unit&lt;/h3&gt;
+&lt;p&gt;对于开发者来说，工作量最大的部分应该是编写配置单元文件，定义所需要的单元。&lt;/p&gt;
+
+&lt;p&gt;systemd unit 类型&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Unit Type&lt;/th&gt;
+      &lt;th&gt;File Extension&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Service unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.service&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;服务类&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Target unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.target&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;一个 unit 服务组，用于模拟实现运行级别&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Automount unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.automount&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;文件系统自动挂载点&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Device unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.device&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;内核识别的设备文件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Mount unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.mount&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;文件系统挂载点&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Path unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.path&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;文件或目录&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Scope unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.scope&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;外部创建的进程&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Slice unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.slice&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;A group of hierarchically organized units that manage system processes.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Snapshot unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.snapshot&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;系统快照&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Socket unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.socket&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;套接字&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Swap unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.swap&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;标识 swap 设备&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Timer unit&lt;/td&gt;
+      &lt;td&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;.timer&lt;/code&gt;&lt;/td&gt;
+      &lt;td&gt;systemd 的计时器&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;unit 文件保存位置&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Directory&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/usr/lib/systemd/system/&lt;/td&gt;
+      &lt;td&gt;RPM 包安装时分发的 unit 文件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/run/systemd/system/&lt;/td&gt;
+      &lt;td&gt;systemd 运行时创建的文件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;/etc/systemd/system/&lt;/td&gt;
+      &lt;td&gt;systemctl enable 创建的 unit 文件&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;管理系统服务&quot;&gt;管理系统服务&lt;/h3&gt;
+&lt;p&gt;systemd 的主要命令行工具是  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;systemctl&lt;/code&gt; 。&lt;/p&gt;
+
+&lt;p&gt;多数管理员应该都已经非常熟悉系统服务和 init 系统的管理，比如 service、chkconfig 以及 telinit 命令的使用。
+systemd 也完成同样的管理任务，只是命令工具 systemctl 的语法有所不同而已。&lt;/p&gt;
+
+&lt;p&gt;systemd 命令和 sysvinit 命令对比:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;service&lt;/th&gt;
+      &lt;th&gt;systemctl&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service name start&lt;/td&gt;
+      &lt;td&gt;systemctl start name.service&lt;/td&gt;
+      &lt;td&gt;启动服务&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service name stop&lt;/td&gt;
+      &lt;td&gt;systemctl stop name.service&lt;/td&gt;
+      &lt;td&gt;停止服务&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service name restart&lt;/td&gt;
+      &lt;td&gt;systemctl restart name.service&lt;/td&gt;
+      &lt;td&gt;重启服务（没启动的服务会启动）&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service namecondrestart&lt;/td&gt;
+      &lt;td&gt;systemctl try-restart name.service&lt;/td&gt;
+      &lt;td&gt;只重启正在运行的服务&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service name reload&lt;/td&gt;
+      &lt;td&gt;systemctl reload name.service&lt;/td&gt;
+      &lt;td&gt;重载配置文件&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service name status&lt;/td&gt;
+      &lt;td&gt;systemctl status name.service&lt;/td&gt;
+      &lt;td&gt;检查服务状态&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service name status&lt;/td&gt;
+      &lt;td&gt;systemctl is-active name.service&lt;/td&gt;
+      &lt;td&gt;检查服务是否启动&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;service –status-all&lt;/td&gt;
+      &lt;td&gt;systemctl list-units –type service –all&lt;/td&gt;
+      &lt;td&gt;显示所有的服务状态&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;chkconfig 和 systemctl 命令对比:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;chkconfig&lt;/th&gt;
+      &lt;th&gt;systemctl&lt;/th&gt;
+      &lt;th&gt;Description&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;chkconfig name on&lt;/td&gt;
+      &lt;td&gt;systemctl enable name.service&lt;/td&gt;
+      &lt;td&gt;启用开机自启服务&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;chkconfig name off&lt;/td&gt;
+      &lt;td&gt;systemctl disable name.service&lt;/td&gt;
+      &lt;td&gt;停用自启服务&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;chkconfig –list name&lt;/td&gt;
+      &lt;td&gt;systemctl status name.service&lt;/td&gt;
+      &lt;td&gt;检查服务状态&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;chkconfig –list name&lt;/td&gt;
+      &lt;td&gt;systemctl is-enabled name.service&lt;/td&gt;
+      &lt;td&gt;查看服务是否自启&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;chkconfig –list&lt;/td&gt;
+      &lt;td&gt;systemctl list-unit-files –type service&lt;/td&gt;
+      &lt;td&gt;查看所有服务&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;chkconfig –list&lt;/td&gt;
+      &lt;td&gt;systemctl list-dependencies –after&lt;/td&gt;
+      &lt;td&gt;列出在指定服务之前启动的服务（依赖）&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;chkconfig –list&lt;/td&gt;
+      &lt;td&gt;systemctl list-dependencies –before&lt;/td&gt;
+      &lt;td&gt;列出在指定服务之后启动的服务（被依赖）&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;hr /&gt;
+&lt;h3 id=&quot;参考资料&quot;&gt;参考资料&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://wiki.archlinux.org/index.php/systemd&quot;&gt;systemd - ArchWiki&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;&lt;a href=&quot;https://linux.cn/article-5926-1.html&quot;&gt;systemctl 命令完全指南&lt;/a&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</content><author><name>Shuo</name></author><category term="Linux" /><category term="Tool" /><summary type="html">systemd 是一个 Linux 系统基础组件的集合，提供了一个系统和服务管理器，运行为 PID 1 并负责启动其它程序。 功能包括：支持并行化任务；同时采用 socket 式与 D-Bus 总线式激活服务；按需启动守护进程（daemon）； 利用 Linux 的 cgroups 监视进程；支持快照和系统恢复；维护挂载点和自动挂载点；各服务间基于依赖关系进行精密控制。 systemd 支持 SysV 和 LSB 初始脚本，可以替代 sysvinit。 除此之外，功能还包括日志进程、控制基础系统配置，维护登陆用户列表以及系统账户、运行时目录和设置，可以运行容器和虚拟机， 可以简单的管理网络配置、网络时间同步、日志转发和名称解析等。</summary></entry><entry><title type="html">分割平衡字符串</title><link href="https://blog.awesee.cn/problems/split-a-string-in-balanced-strings/" rel="alternate" type="text/html" title="分割平衡字符串" /><published>2019-05-06T21:30:00+08:00</published><updated>2019-05-06T21:30:00+08:00</updated><id>https://blog.awesee.cn/problems/split-a-string-in-balanced-strings</id><content type="html" xml:base="https://blog.awesee.cn/problems/split-a-string-in-balanced-strings/">&lt;h2 id=&quot;1221-分割平衡字符串-easy&quot;&gt;1221. 分割平衡字符串 (Easy)&lt;/h2&gt;
+
+&lt;p&gt;在一个 &lt;strong&gt;平衡字符串&lt;/strong&gt; 中，&lt;code&gt;'L'&lt;/code&gt; 和 &lt;code&gt;'R'&lt;/code&gt; 字符的数量是相同的。&lt;/p&gt;
+
+&lt;p&gt;给你一个平衡字符串&amp;nbsp;&lt;code&gt;s&lt;/code&gt;，请你将它分割成尽可能多的平衡字符串。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;注意：&lt;/strong&gt;分割得到的每个字符串都必须是平衡字符串，且分割得到的平衡字符串是原平衡字符串的连续子串。&lt;/p&gt;
+
+&lt;p&gt;返回可以通过分割得到的平衡字符串的 &lt;strong&gt;最大数量&lt;/strong&gt; &lt;strong&gt;。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 1：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;s = &quot;RLRRLLRLRL&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;4
+&lt;strong&gt;解释：&lt;/strong&gt;s 可以分割为 &quot;RL&quot;、&quot;RRLL&quot;、&quot;RL&quot;、&quot;RL&quot; ，每个子字符串中都包含相同数量的 'L' 和 'R' 。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 2：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;s = &quot;RLLLLRRRLR&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;3
+&lt;strong&gt;解释：&lt;/strong&gt;s 可以分割为 &quot;RL&quot;、&quot;LLLRRR&quot;、&quot;LR&quot; ，每个子字符串中都包含相同数量的 'L' 和 'R' 。
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 3：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;s = &quot;LLLLRRRR&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;1
+&lt;strong&gt;解释：&lt;/strong&gt;s 只能保持原样 &quot;LLLLRRRR&quot;.
+&lt;/pre&gt;
+
+&lt;p&gt;&lt;strong&gt;示例 4：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;
+&lt;strong&gt;输入：&lt;/strong&gt;s = &quot;RLRRRLLRLL&quot;
+&lt;strong&gt;输出：&lt;/strong&gt;2
+&lt;strong&gt;解释：&lt;/strong&gt;s 可以分割为 &quot;RL&quot;、&quot;RRRLLRLL&quot; ，每个子字符串中都包含相同数量的 'L' 和 'R' 。
+&lt;/pre&gt;
+
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提示：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;&lt;code&gt;1 &amp;lt;= s.length &amp;lt;= 1000&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;s[i] = 'L' 或 'R'&lt;/code&gt;&lt;/li&gt;
+	&lt;li&gt;&lt;code&gt;s&lt;/code&gt; 是一个 &lt;strong&gt;平衡&lt;/strong&gt; 字符串&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;相关话题&quot;&gt;相关话题&lt;/h3&gt;
+&lt;p&gt;[&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/greedy/README.md&quot;&gt;贪心&lt;/a&gt;]
+  [&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/string/README.md&quot;&gt;字符串&lt;/a&gt;]
+  [&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/tag/counting/README.md&quot;&gt;计数&lt;/a&gt;]&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;h2 id=&quot;解法&quot;&gt;&lt;a href=&quot;https://github.com/awesee/leetcode/tree/main/problems/split-a-string-in-balanced-strings&quot;&gt;解法&lt;/a&gt;&lt;/h2&gt;</content><author><name>Shuo</name></author><category term="Leetcode" /><category term="Greedy" /><category term="String" /><category term="Counting" /><summary type="html">1221. 分割平衡字符串 (Easy)</summary></entry></feed>
